@@ -1,16 +1,15 @@
 class VenuesController < ApplicationController
-
   def index
-    matching_venues = venue.all
-    venues = matching_venues.order(:created_at)
+    matching_venues = Venue.all
+    @venues = matching_venues.order(:created_at)
 
     render({ :template => "venue_templates/venue_list.html.erb" })
   end
 
   def show
-    venue_id = params.fetch("venue_id")
-    matching_venues = Venue.where({ :id => venue_id })
-    the_venue = matching_venues
+    venue_id = params.fetch("an_id")
+    matching_venues = Venue.where({ :id => venue_id }).first
+    @the_venue = matching_venues
 
     render({ :template => "venue_templates/details.html.erb" })
   end
@@ -24,7 +23,7 @@ class VenuesController < ApplicationController
 
     redirect_to("/venues/#{venue.name}")
   end
-  
+
   def update
     the_id = params.fetch("venue_id")
 
@@ -33,7 +32,7 @@ class VenuesController < ApplicationController
     venue.name = params.fetch("Query_name")
     venue.neighborhood = params.fetch("query_neighborhood")
     venue.save
-    
+
     redirect_to("/venues/#{venue.id}")
   end
 
@@ -45,5 +44,4 @@ class VenuesController < ApplicationController
 
     redirect_to("/venues")
   end
-
 end
