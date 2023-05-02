@@ -15,6 +15,7 @@ class UsersController < ApplicationController
   end
 
   def create
+    # insert_user_record?query_username=chichi
     user = User.new
     user.username = params.fetch("query_username")
     user.save
